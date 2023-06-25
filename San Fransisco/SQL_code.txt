@@ -1,0 +1,97 @@
+1) copy visited_segments from 'C:/Files_Backup/visited_segments.txt' with delimiter ',' NULL as '' CSV HEADER
+2) ALTER TABLE visited_segments ADD COLUMN id SERIAL;
+3) CREATE INDEX idx_visited_segments_osm_way_id ON visited_segments ("OSM_Way_ID");
+4) CREATE INDEX idx_visited_segments_time_interval ON visited_segments ("Time_Enter", "Time_Leave");
+5) CREATE INDEX idx_visited_segments_criteria ON visited_segments ("OSM_Way_ID", "Traj_ID", "Taxi_ID");
+6) CREATE INDEX idx_visited_segments_criteria ON visited_segments ("OSM_Way_ID", "Traj_ID", "Taxi_ID");
+ 
+7) drop function SPQ;
+8) ​CREATE OR REPLACE FUNCTION public.spq(
+	path integer[],
+	time_enter timestamp without time zone,
+	time_leave timestamp without time zone)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+DECLARE
+    path_length INT;
+    trajectories INT[];
+    _index INTEGER;
+    traj_id INT;
+    taxi_id INT;
+    inter INT;
+    last_array VARCHAR[];
+BEGIN
+    -- Length of the path given to the function
+    path_length := array_length(path, 1);
+
+    -- This array will temporarily save the trajectories that match the SPQ condition
+    trajectories := '{}';
+
+    -- Find all the indexes where the first edge in the path is located
+    WITH indexed_data AS (
+        SELECT id, "Traj_ID", "Taxi_ID"
+        FROM visited_segments
+        WHERE "Time_Enter" >= time_enter AND "Time_Leave" <= time_leave
+            AND "OSM_Way_ID" = path[1]
+    )
+    SELECT array_agg(id) INTO trajectories
+    FROM indexed_data;
+	
+	TRUNCATE TABLE temp_table;
+	INSERT INTO temp_table 
+	SELECT * FROM visited_segments WHERE "Time_Enter" >= time_enter AND "Time_Leave" <= time_leave;
+
+    -- Iterate through all indexes (note the Taxi_ID and Traj_ID numbers)
+    IF trajectories IS NOT NULL THEN
+        FOREACH _index IN ARRAY trajectories
+        LOOP
+            SELECT "Traj_ID", "Taxi_ID"
+            INTO traj_id, taxi_id
+            FROM temp_table
+            WHERE "id" = _index;
+
+            inter := 1;
+
+            -- Decide if the row in the next index matches the criteria (same Taxi_ID, same Traj_ID, the required path)
+            FOR i IN 2..path_length LOOP
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM temp_table
+                    WHERE "id" = _index + i - 1
+                        AND "OSM_Way_ID" = path[i]
+                        AND "Traj_ID" = traj_id
+                        AND "Taxi_ID" = taxi_id
+                ) THEN
+                    EXIT;
+                END IF;
+
+                inter := inter + 1; -- If the criteria match, increase the inter counter by one
+            END LOOP;
+
+            -- If the criteria match as many times as the length of the path, then we found one trajectory
+            IF path_length = inter THEN
+                last_array := last_array || (taxi_id || '_' || traj_id)::VARCHAR;
+            END IF;
+        END LOOP;
+    END IF;
+
+    -- Remove duplicate entries in the last_array
+    last_array := ARRAY(
+        SELECT DISTINCT unnest(last_array)
+    );
+
+    -- Return the number of unique trajectories that match the criteria
+    IF last_array IS NOT NULL THEN
+		RETURN array_length(last_array, 1);
+	ELSE
+		RETURN 0;
+	END IF;
+END;
+$BODY$;
+
+ALTER FUNCTION public.spq(integer[], timestamp without time zone, timestamp without time zone)
+    OWNER TO postgres;
+
