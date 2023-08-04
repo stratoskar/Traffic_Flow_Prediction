@@ -1,7 +1,3 @@
-#######################################
-# PLpgsql code for SPQ implementation #
-#######################################
-
 1) copy visited_segments from 'C:/Files_Backup/visited_segments.txt' with delimiter ',' NULL as '' CSV HEADER
 2) ALTER TABLE visited_segments ADD COLUMN id SERIAL;
 3) CREATE INDEX idx_visited_segments_osm_way_id ON visited_segments ("OSM_Way_ID");
