@@ -1,12 +1,37 @@
-1) copy visited_segments from 'C:/Files_Backup/visited_segments.txt' with delimiter ',' NULL as '' CSV HEADER
-2) ALTER TABLE visited_segments ADD COLUMN id SERIAL;
-3) CREATE INDEX idx_visited_segments_osm_way_id ON visited_segments ("OSM_Way_ID");
-4) CREATE INDEX idx_visited_segments_time_interval ON visited_segments ("Time_Enter", "Time_Leave");
-5) CREATE INDEX idx_visited_segments_criteria ON visited_segments ("OSM_Way_ID", "Traj_ID", "Taxi_ID");
-6) CREATE INDEX idx_visited_segments_criteria ON visited_segments ("OSM_Way_ID", "Traj_ID", "Taxi_ID");
+#####################################################################
+# Εκτέλεση των Ακριβών Ερωτημάτων Μονοπατιού σε περιβάλλον pgAdmin4 #
+#####################################################################
+
+Βήμα 1) Δημιουργία μίας κενής βάσης δεδομένων.
+
+
+
+Βήμα 2) Δημιουργία κενού πίνακα στην βάση που δημιουργήθηκε στο βήμα 1.
+
+
+
+Βήμα 3) Φόρτωση του πίνακα με τα δεδομένα "visited_segments", όπως αυτά έχουν δημιουργηθεί μετά από
+την διαδικασία του Μap Matching με την εκτέλεση των εντολών: 
+
+COPY visited_segments FROM 'file_name' WITH DELIMITER ',' NULL AS '' CSV HEADER
+ALTER TABLE visited_segments ADD COLUMN id SERIAL;
+
+
+
+Βήμα  4) Εκτέλεση των παρακάτω εντολών για δημιουργία ευρετηρίων:
+
+CREATE INDEX idx_visited_segments_osm_way_id ON visited_segments ("OSM_Way_ID");
+CREATE INDEX idx_visited_segments_time_interval ON visited_segments ("Time_Enter", "Time_Leave");
+CREATE INDEX idx_visited_segments_criteria ON visited_segments ("OSM_Way_ID", "Traj_ID", "Taxi_ID");
+CREATE INDEX idx_visited_segments_criteria ON visited_segments ("OSM_Way_ID", "Traj_ID", "Taxi_ID");
  
-7) drop function SPQ;
-8) ​CREATE OR REPLACE FUNCTION public.spq(
+
+
+Βήμα 5) Δήλωση της συνάρτησης των Ακριβών Ερωτημάτων Μονοπατιού (SPQ) εκτελώντας τον παρακάτω κώδικα στην βάση:
+
+DROP FUNCTION IF EXISTS SPQ;
+
+CREATE OR REPLACE FUNCTION public.spq(
 	path integer[],
 	time_enter timestamp without time zone,
 	time_leave timestamp without time zone)
@@ -95,3 +120,11 @@ $BODY$;
 ALTER FUNCTION public.spq(integer[], timestamp without time zone, timestamp without time zone)
     OWNER TO postgres;
 
+
+
+Μετά από την εκτέλεση αυτού του κώδικα, θα υποστηρίζεται η εκτέλεση των SPQs.
+
+
+Παραδείγματα κλήσης της SPQ συνάρτησης:
+SELECT spq(ARRAY([514685521, 514685521]),'2008-05-18 05:00:00','2008-05-18 05:30:00');
+SELECT SPQ(ARRAY[48569999, 123867457, 123867455, 617730085, 32007403, 8920391, 8920391, 8920391, 396949645, 396949645, 255330048, 255351721, 255351721, 396945239, 417400761],'2008-05-18 08:30:00','2008-05-18 09:00:00');
