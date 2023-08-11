@@ -13,10 +13,10 @@ This repository contains my diploma thesis project focused on forecasting traffi
 
 ## Dependencies
 
-To run the code in this repository, ensure you have the latest version of Python installed. The required libraries are listed in the `Necessary_Libraries.txt` file. You can install them using pip or conda:
+To run the code in this repository, ensure you have the latest version of Python installed. The required libraries are listed in the `Necessary Python Libraries.txt` file. You can install them using pip or conda.
 
-About Me
-My name is Efstratios Karkanis, and I am a 4th-grade student at the University of Piraeus. This repository is a part of my diploma thesis project. If you have any questions or would like to get in touch, feel free to reach out to me at stratoskarkanis2@gmail.com.
+## About Me
+My name is Efstratios Karkanis, and I am a 4th-grade student at the University of Piraeus. If you have any questions or would like to get in touch, feel free to reach out to me at stratoskarkanis2@gmail.com.
 
 Feel free to explore the code and the insights gained from this project. Contributions and feedback are always welcome!
 
