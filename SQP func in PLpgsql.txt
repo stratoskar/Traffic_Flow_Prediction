@@ -1,24 +1,24 @@
-#####################################################################
-# Εκτέλεση των Ακριβών Ερωτημάτων Μονοπατιού σε περιβάλλον pgAdmin4 #
-#####################################################################
+############################################################
+# Execution of Strict Path Queries in pgAdmin4 environment #
+############################################################
 
-Βήμα 1) Δημιουργία μίας κενής βάσης δεδομένων.
-
-
-
-Βήμα 2) Δημιουργία κενού πίνακα στην βάση που δημιουργήθηκε στο βήμα 1.
+Step 1) Create an empty database.
 
 
 
-Βήμα 3) Φόρτωση του πίνακα με τα δεδομένα "visited_segments", όπως αυτά έχουν δημιουργηθεί μετά από
-την διαδικασία του Μap Matching με την εκτέλεση των εντολών: 
+Step 2) Create an empty table in the database created in step 1.
+
+
+
+Step 3) Load the table with the "visited_segments" data, as created after
+Map Matching process by executing the commands: 
 
 COPY visited_segments FROM 'file_name' WITH DELIMITER ',' NULL AS '' CSV HEADER
 ALTER TABLE visited_segments ADD COLUMN id SERIAL;
 
 
 
-Βήμα  4) Εκτέλεση των παρακάτω εντολών για δημιουργία ευρετηρίων:
+Step 4) Execute the following commands to create indexes:
 
 CREATE INDEX idx_visited_segments_osm_way_id ON visited_segments ("OSM_Way_ID");
 CREATE INDEX idx_visited_segments_time_interval ON visited_segments ("Time_Enter", "Time_Leave");
@@ -27,7 +27,7 @@ CREATE INDEX idx_visited_segments_criteria ON visited_segments ("OSM_Way_ID", "T
  
 
 
-Βήμα 5) Δήλωση της συνάρτησης των Ακριβών Ερωτημάτων Μονοπατιού (SPQ) εκτελώντας τον παρακάτω κώδικα στην βάση:
+Step 5) Declare the Strict Path Query (SPQ) function by executing the following code in the database:
 
 DROP FUNCTION IF EXISTS SPQ;
 
@@ -122,9 +122,9 @@ ALTER FUNCTION public.spq(integer[], timestamp without time zone, timestamp with
 
 
 
-Μετά από την εκτέλεση αυτού του κώδικα, θα υποστηρίζεται η εκτέλεση των SPQs.
+After running this code, the execution of SPQs will be supported.
 
 
-Παραδείγματα κλήσης της SPQ συνάρτησης:
+Examples of SPQ function calls:
 SELECT spq(ARRAY([514685521, 514685521]),'2008-05-18 05:00:00','2008-05-18 05:30:00');
 SELECT SPQ(ARRAY[48569999, 123867457, 123867455, 617730085, 32007403, 8920391, 8920391, 8920391, 396949645, 396949645, 255330048, 255351721, 255351721, 396945239, 417400761],'2008-05-18 08:30:00','2008-05-18 09:00:00');
