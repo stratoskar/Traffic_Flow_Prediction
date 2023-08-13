@@ -1,1 +1,7 @@
-Within this directory, you will find the Python code. The code is structured across three distinct Jupyter Notebook files. It is enriched with comments, explanations, and visualization graphs where pertinent to facilitate a thorough understanding of the operations carried out in each cell.
+Within this directory, you will find all the Python code. The code is structured across three distinct Jupyter Notebook files. In each notebook th code executes specific data analysis operations. The code is enriched with comments, explanations, and visualization graphs (where pertinent) to facilitate a thorough understanding of the operations carried out in each cell.
+
+The first code file is named "Notebook1.ipynb". This notebook includes all the data preprocessing steps. To run this notebook, you should provide the "alldata.zip" from the "Data_Used" folder as input. After executing this notebook, the output files "times_series_SPQ.txt" and "time_series_without_SPQ.txt" are generated (they are located in the "Data_Used" folder).
+
+The second file is named "Notebook2.ipynb". In this notebook, a comparison is conducted between two datasets: "times_series_SPQ.txt" and "time_series_without_SPQ.txt", which are provided as input.
+
+The last file, "Notebook3.ipynb", contains all the machine learning model training and testing processes. Additionally, forecasts are generated using the best model with the lowest Root Mean Square Error (RMSE) score identified during the execution of this notebook. "times_series_SPQ.txt" dataset is given as input to this notebook file.
