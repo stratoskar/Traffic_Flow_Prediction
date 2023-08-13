@@ -1,1 +1,1 @@
-In this folder, you will find the python code. The code is full of comments and details, in order to understand what is being executed each time.
+Within this directory, you will find the Python code. The code is structured across three distinct Jupyter Notebook files. It is enriched with comments, explanations, and visualization graphs where pertinent to facilitate a thorough understanding of the operations carried out in each cell.
