@@ -1,1 +1,1 @@
-In this folder, you will find all the reports that have been created so far.
+In this folder, you will discover a collection of reports I have compiled for my thesis. These reports track my progress in studying for this thesis, explaining the methods I have used, the algorithms that I have utilized, and the related research I have looked into.
