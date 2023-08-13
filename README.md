@@ -5,7 +5,7 @@ This repository contains my diploma thesis project focused on forecasting traffi
 ## Repository Overview
 
 - **Objective:** Forecast traffic flow in paths of San Francisco, California, using historical data.
-- **Methodology:** Time series forecasting using machine and deep learning models. We use the Strict Path Queries paper to measure traffic flow in each path accurately. Read more about SPQ methodology `[here](./Related Work/Strict Path Queries.pdf)`
+- **Methodology:** Time series forecasting using machine and deep learning models. We use the Strict Path Queries paper to measure traffic flow in each path accurately. Read more about SPQ methodology [here](https://www.google.gr/?hl=el)
 - **Data:** The dataset consists of paths, each comprising consecutive edges representing road segments between intersections.
 - **Models Used:** XGBoost, LSTM, Encoder-Decoder, and Random Forest.
 - **Number of Paths:** 1000 paths are used for making traffic forecasts.
