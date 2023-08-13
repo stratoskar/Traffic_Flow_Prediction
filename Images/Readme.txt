@@ -1,2 +1,1 @@
-
-Within this directory, you'll find images generated through code execution. For example, there are visualizations of traffic flow data and graphs that show machine learning model performances on train and test data.
+Inside this directory, a number of images and graphs have been produced as a result of executing various code segments. These visual elements encompass diverse content such as depictions of traffic flow data trends and diagrams illustrating the performance of machine learning models across training and testing datasets. The images have been meticulously organized into distinct folders based on their corresponding themes and topics.
