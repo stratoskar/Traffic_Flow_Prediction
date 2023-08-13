@@ -1,0 +1,2 @@
+
+Within this directory, you'll find images generated through code execution. For example, there are visualizations of traffic flow data and graphs that show machine learning model performances on train and test data.
