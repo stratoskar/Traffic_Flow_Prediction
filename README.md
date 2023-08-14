@@ -1,6 +1,6 @@
 # Traffic Flow Forecasting in San Francisco, California
 
-This repository contains my diploma thesis project focused on forecasting traffic flow in paths of San Francisco, California. The goal is to predict the number of taxis that will cross a specific path given historical data. The project utilizes machine learning and deep learning models such as XGBoost, LSTM, Encoder-Decoder, and Random Forest for making accurate forecasts.
+This repository contains my thesis project focused on forecasting traffic flow in paths of San Francisco, California. The goal is to predict the number of taxis that will cross a specific path given historical data. The project utilizes machine learning and deep learning models such as XGBoost, LSTM, Encoder-Decoder, and Random Forest for making accurate forecasts.
 
 ## Repository Overview
 
