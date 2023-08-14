@@ -1,1 +1,1 @@
-This folder contains all the related work that I studied.
+This folder contains all the related work that I have studied. Here, you can find relevant papers in which researchers attempt to address the issue of traffic flow within a road network by utilizing machine learning and deep learning algorithms.
