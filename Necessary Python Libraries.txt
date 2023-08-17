@@ -21,6 +21,7 @@ pip install xgboost
 pip install MinMaxScaler
 pip install tensorflow
 pip install keras
+pip install joblib
 
 *********************************************************
 
@@ -43,6 +44,7 @@ conda install xgboost
 conda install MinMaxScaler
 conda install tensorflow
 conda install keras
+conda install -c conda-forge joblib
 
 
 
