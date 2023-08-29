@@ -1,5 +1,6 @@
 #########################################################
 # Installing Necessary Libraries needed to run the code #
+# Last updated: 29 August 2023				#
 #########################################################
 
 Using pip:
@@ -22,6 +23,7 @@ pip install MinMaxScaler
 pip install tensorflow
 pip install keras
 pip install joblib
+pip install osmnx
 
 *********************************************************
 
@@ -45,7 +47,7 @@ conda install MinMaxScaler
 conda install tensorflow
 conda install keras
 conda install -c conda-forge joblib
-
+conda install -c conda-forge osmnx
 
 
 

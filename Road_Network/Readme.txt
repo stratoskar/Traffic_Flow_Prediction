@@ -1,0 +1,1 @@
+This folder contains the road network of San Francisco City. The network was extracted using the osmnx python library.
