@@ -1,0 +1,1 @@
+This folder contains the paper, in which Strict Path Queries (SPQs) are proposed.
